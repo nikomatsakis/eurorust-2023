@@ -94,3 +94,16 @@ In a word, **reliability**
 
 ---
 
+# I'm not the first to observe this
+
+![Ashley Williams at RustFest 2017: I'm selling Rust because of its safety](./images/agdubs-rustfest-2017.png)
+
+???
+
+Now, I'm not the first to see this. There's a great presentation by Ashley Williams -- speaking tomorrow at this conference! -- talking about her experience advocating for Rust at npm, and she makes the same observation.
+
+By the way, if you're one of those people who would like to see Rust being used at their workplace, but isn't sure how to advocate for it, I recommend checking out her talk -- it's great!
+
+---
+
+# 
