@@ -447,7 +447,7 @@ mark,
 
 .line5 img {
   position: absolute;
-  top: 245px;
+  top: 230px;
   left: 10px;
   width: 50px;
 }
@@ -455,6 +455,13 @@ mark,
 .line7 img {
   position: absolute;
   top: 300px;
+  left: 10px;
+  width: 50px;
+}
+
+.line8 img {
+  position: absolute;
+  top: 310px;
   left: 10px;
   width: 50px;
 }
@@ -561,4 +568,12 @@ blockquote p {
   content: "";
   display: table;
   clear: both;
+}
+
+.elsekw img {
+  position: absolute;
+  top: 177px;
+  left: 450px;
+  width: 50px;
+  transform: rotate(135deg);
 }

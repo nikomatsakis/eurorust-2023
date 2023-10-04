@@ -106,4 +106,113 @@ By the way, if you're one of those people who would like to see Rust being used 
 
 ---
 
-# 
+# Rust 2024 is coming
+
+![Dancing Ferris](./images/dancing-ferris.gif)
+
+???
+
+The title of this talk is Rust 
+
+---
+
+# Rust editions in a nutshell
+
+"Breaking changes where no code breaks"
+
+* Every crate declares its *Rust edition*
+
+--
+* Compiler understands *all* editions
+
+--
+* Editions interoperate
+
+---
+
+# Rust editions are also an opportunity to reflect
+
+"Gather round Rustaceans, and I'll tell you a tale"
+
+.p60[![Ferris around a campfire](./images/camprust.png)]
+
+---
+
+# Let-else
+
+.p60[![Tweet about let else](./images/LetElseTweet.png)]
+
+---
+
+# Let-else
+
+.p60[![Tweet about let else](./images/LetElseTweet1.png)]
+
+--
+.p60[![Tweet about let else](./images/LetElseTweet2.png)]
+.p60[![Tweet about let else](./images/LetElseTweet3.png)]
+.p60[![Tweet about let else](./images/LetElseTweet4.png)]
+
+---
+
+# Before let-else
+
+```rust
+fn process_data() -> Option<Data> { }
+
+fn make_decision() -> bool {
+    if let Some(data) = process_data() {
+        do_stuff_with(data)
+    } else {
+        false
+    }
+}
+```
+
+.line5[![Arrow](./images/Arrow.png)]
+
+---
+name: after-let-else
+
+# After let-else
+
+```rust
+fn process_data() -> Option<Data> { }
+
+fn make_decision() -> bool {
+    let Some(data) = process_data() else {
+        return false;
+    };
+
+    do_stuff_with(data)
+}
+```
+
+---
+template: after-let-else
+
+.elsekw[![Arrow](./images/Arrow.png)]
+
+???
+
+Now you can put this `else` keyword...
+
+---
+template: after-let-else
+
+.line5[![Arrow](./images/Arrow.png)]
+
+???
+
+...and you can move the "unlikely case" here
+
+---
+template: after-let-else
+
+.line8[![Arrow](./images/Arrow.png)]
+
+???
+
+...with the happy path being unindented.
+
+---
