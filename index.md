@@ -216,3 +216,51 @@ template: after-let-else
 ...with the happy path being unindented.
 
 ---
+
+# How an idea becomes a feature
+
+.pathrfc[![RFC](./images/LetElseRFC.png)]
+
+--
+.pathrfcimpl[![Arrow](./images/Arrow.png)]
+.pathimpl[![Implemented](./images/LetElsePR1.png)]
+
+--
+.pathimplstab[![Arrow](./images/Arrow.png)]
+.pathstab[![Stabilization PR](./images/LetElsePRStabilize.png)]
+
+--
+
+.pathdocs[![Documentation PR](./images/LetElsePRDocs.png)]
+
+--
+
+.pathtemps[![Temps PR](./images/LetElsePRTemps.png)]
+
+--
+
+.pathfmt[![Format PR](./images/LetElsePRFmt.png)]
+
+--
+
+.pathstabfcp[![Arrow](./images/Arrow.png)]
+.pathfcp[![FCP](./images/LetElseFCP.png)]
+
+---
+
+# Credit where credit is due
+
+.pathcredit[.thanks[![Thank you](./images/LetElseThanks.png)]]
+
+--
+
+.credit1[![Arrow](./images/Arrow.png)]
+.credit2[![Arrow](./images/Arrow.png)]
+.credit3[![Arrow](./images/Arrow.png)]
+
+--
+
+.pathcredit2[
+...plus `@ytmimi` who wrote the rustfmt impl!
+]
+.credit4[![Arrow](./images/Arrow.png)]
