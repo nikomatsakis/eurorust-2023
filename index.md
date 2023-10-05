@@ -290,11 +290,9 @@ template: after-let-else
 
 .p80[![Rust analyzer](./images/FeatureRustAnalyzer.png)]
 
---
-
-Heck yeah, they do!
-
-Consider the rust-analyzer [Open Collective](https://opencollective.com/rust-analyzer).
+.footnote[
+    Consider the rust-analyzer [Open Collective](https://opencollective.com/rust-analyzer).
+]
 
 ---
 
@@ -322,9 +320,79 @@ fn handle() -> impl Future<Output = Response> {
 
 ---
 
-# Progress on async
+# But async fn and impl Trait can't be used everywhere
 
 ```rust
-trait 
+trait Handler {
+    async fn handle(r: Request) -> Response; // 💥
+}
+
+trait Handler {
+    fn handle(r: Request) -> impl Future<Output = Response>; // 💥
+}
+
+impl Handler {
+    async fn handle(r: Request) -> Response { // 💥
+        ... do_stuff().await ...
+    }
+}
 ```
 
+.footnote[
+    PSA: You can use [the `#[async_trait]` crate](https://crates.io/crates/async-trait) to workaround this today.
+]
+
+???
+
+But as of today, async functions (and impl Trait return types) can only be used in very limited places. 
+
+In particular, you can't use them in traits. 
+
+This is a major stumbling block for new users, who innocently write the syntax only to get an error.
+
+There is a workaround: there's a crate that you can use to simulate async functions in traits, and the compiler even suggests it.
+
+That's ok, but (a) you really shouldn't have to reach for a crate for core functionality like this
+
+and (b) the techniques the async-trait crate uses are not workable for all scenarios. 
+
+Lack of async fn in traits is a big blocker to the development of a rich async ecosystem.
+
+Crates like Tower, which defines a generic middleware interface, are much more complex and not able to reach 1.0 status.
+
+The standard library can't add interop traits for things like reading and writing of streams.
+
+The list goes on.
+
+---
+
+# When Rust 1.75 is released on Dec 28...
+
+```rust
+trait Handler {
+    async fn handle(r: Request) -> Response;  // ⚠️
+}
+
+trait Handler {
+    fn handle(r: Request) -> impl Future<Output = Response>; // ✅
+}
+
+impl Handler {
+    async fn handle(r: Request) -> Response { // ✅
+        ... do_stuff().await ...
+    }
+}
+```
+
+???
+
+But all of that is changing! As of Rust 1.75, both async functions and impl trait are accepted within traits!
+
+And yes, it 
+
+---
+
+# What's this warning about?
+
+```rust
+```
