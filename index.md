@@ -264,3 +264,67 @@ template: after-let-else
 ...plus `@ytmimi` who wrote the rustfmt impl!
 ]
 .credit4[![Arrow](./images/Arrow.png)]
+
+---
+
+# More goodness
+
+.p48[![Cargo add](./images/FeatureCargoAdd.png)]
+
+--
+.p48[![Inline assembly](./images/FeatureInlineAsm.png)]
+
+--
+.p48[![HashMap::from](./images/FeatureHashMapFrom.png)]
+
+--
+.p48[![GATs](./images/FeatureGATs.png)]
+
+
+--
+.p48[![Scoped threads](./images/FeatureScopedThreads.png)]
+
+---
+
+# And my personal favorite...
+
+.p80[![Rust analyzer](./images/FeatureRustAnalyzer.png)]
+
+--
+
+Heck yeah, they do!
+
+Consider the rust-analyzer [Open Collective](https://opencollective.com/rust-analyzer).
+
+---
+
+# Async I/O in Rust
+
+Ever since Rust 1.39 was released in Nov 2019...
+
+```rust
+async fn handle(r: Request) -> Response {
+    ... do_stuff().await ...
+}
+```
+
+--
+
+This is actually sugar for...
+
+```rust
+fn handle() -> impl Future<Output = Response> {
+    async move {
+        ... do_stuff().await ...
+    }
+}
+```
+
+---
+
+# Progress on async
+
+```rust
+trait 
+```
+
