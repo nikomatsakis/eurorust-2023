@@ -26,27 +26,95 @@ count: false
 
 Hi! My name is Niko Matsakis. I've been working in Rust a long time, and so I expect some of you know who I am already, but for the rest of y'all, let me introduce myself.
 
-I started working on Rust in 2010. This wasn't actually the **beginning**. As you probably know, Rust goes back further. For example, I never used `rustboot`, the very first Rust compiler implemented in O'caml. But I was involved in the very first 0.1 release of Rust -- I got 64-bit support working. 
+I started working on Rust in 2010. I was involved in the very first public release of Rust, 0.1. We've come a long way since those days! As one tiny exmaple, when I started, Rust was 32-bit only. My first contribution, as I recall, was implementing support for 64-bit systems. Good times. Since then, I've been involved in a lot of other things. I was the first lead of the Rust compiler team and was involved in the Rust core team, back when that was a thing. At this point though my primary role is as co-lead of the Rust language design team.
 
-Since then, I've been involved in a lot of other things. I was the first lead of the Rust compiler team and was involved in the Rust core team, back when that was a thing. At this point though my primary role is as co-lead of the Rust language design team.
-
-Since 2021, I've been working at Amazon, where I manage our Rust team. As some of you may know, Amazon's been making very heavy use of Rust. At this point, every S3 GET request, every Lambda invocation, and a good number of other things make use of services implemented in Rust. Being at Amazon has been a really interesting experience, since it lets me work very closely with the teams here, figuring out exactly where Rust can help them -- and where it holds them up. 
+Since 2021, I've been working at Amazon, where I manage our Rust team. This is a team of folks whose full-time job is to contribute to the Rust project, Tokio, and other parts of the ecosystem. As some of you may know, Amazon's been making very heavy use of Rust. At this point, every S3 GET request, every Lambda invocation, and a good number of other things make use of services implemented in Rust. Being at Amazon has been a really interesting experience, since it lets me work very closely with the teams here, figuring out exactly where Rust can help them -- and where it holds them up. We can then take those lessons, mix them with the experiences of others in other contexts, and find ways to make Rust better for everyone.
 
 ---
 
 # Rust adoption
 
+## Daily downloads
+
+.p100[![crates.io downloads in Rust increasing dramatically](./images/LibsRsCratesIoDailyDownloads.png)]
+
+## Number of users/teams owning a crate
+
+.p100[![crates.io downloads in Rust increasing dramatically](./images/LibsRsCratesIoTeam.png)]
+
+.footnote[
+    Images from [lib.rs/stats](https://libs.rs/stats)
+]
+
+???
+
+The last 10 years have been a wild ride! 
+
+Rust has gone from this little toy language to a key part of the industry.
+
+When I said I work on Rust, people used to give me a weird look. "I thought you said you were a programmer. Are you a chemist?"
+
+Not so true anymore. More and more, people tend to respond, "Oh, hey, we're using Rust for something at work!" 
+
+---
+
+# Rust adoption
+
+.p80[![Rust discussed at the US congress](./images/RustAtCongress.png)]
+
+???
+
+I mean heck, we even have the US congress weighing in on Rust now and, if I recall correctly, probing whether the nightly or stable toolchain is a better choice.
+---
+
+# Rust adoption
+
+.p80[![Rust in batgirl](./images/RustInBatGirl.png)]
+
+???
+
+Of course, the watershed moment was when Rust appeared in the batgirl comic in 2017.
+Boom, our job is done!
+
 --
 
+.batgirlcircle[&nbsp;]
+
+???
+
+Oh, and I'd like to callout that she says Rust is not complicated. Thanks batgirl comic authors! 
+I like this PR.
+
+---
+
+# Rust adoption
+
 * Rust in the cloud
+
+???
+
+We are seeing Rust in the cloud. Both to build the cloud itself, like at (hello!) Amazon and Microsoft, but also to build things *in* the cloud. A lot of people are finding that writing their cloud apps in Rust is a good choice. It saves them money. It requires less beefy machines and runs more reliably. 
 
 --
 
 * Rust in kernels
 
+???
+
+We are seeing Rust in kernels -- Rust for linux? Amazing. Windows kernel? Amazing. 
+
+Rust was designed to be versatile, usable for high-level and low-level applications alike, and seeing it stretch from the machine kernel up to distributed applications in the cloud is a really cool validation of that design.
+
 --
 
 * Rust in **your** workplace?
+
+???
+
+For more and more people, working in Rust is a reality. 
+If you're using Rust in your workplace, I'd love to hear about it after the talk.
+But maybe you're not yet, and you'd like to be.
+Or maybe you yourself are not convinced, and you'd like to know what all the fuss is about.
 
 ---
 
@@ -106,13 +174,17 @@ By the way, if you're one of those people who would like to see Rust being used 
 
 ---
 
-# Rust 2024 is coming
+# What's next for Rust?
+
+.p80[![Steven universe is happy](./images/steven-universe-is-happy.gif)]
+
+---
+
+# The Rust 2024 Edition is coming
 
 ![Dancing Ferris](./images/dancing-ferris.gif)
 
 ???
-
-The title of this talk is Rust 
 
 ---
 
@@ -120,13 +192,24 @@ The title of this talk is Rust
 
 "Breaking changes where no code breaks"
 
-* Every crate declares its *Rust edition*
+* Every crate declares its *Rust edition* (e.g., `edition = "2024"`)
 
 --
 * Compiler understands *all* editions
 
 --
-* Editions interoperate
+* Editions interoperate (we never split the ecosystem)
+
+--
+* Adopting the newest edition is automated
+    * Just run `cargo fix --edition`
+
+--
+
+What all this means:
+
+* Upgrade on **your schedule, not ours**
+    * (and not your dependencies' either)
 
 ---
 
@@ -320,7 +403,7 @@ fn handle() -> impl Future<Output = Response> {
 
 ---
 
-# But async fn and impl Trait can't be used everywhere
+# But async fn and impl Trait are limited
 
 ```rust
 trait Handler {
@@ -338,9 +421,18 @@ impl Handler {
 }
 ```
 
+
 .footnote[
     PSA: You can use [the `#[async_trait]` crate](https://crates.io/crates/async-trait) to workaround this today.
 ]
+
+--
+
+.line2[![Arrow](./images/Arrow.png)]
+
+.line6[![Arrow](./images/Arrow.png)]
+
+.line10[![Arrow](./images/Arrow.png)]
 
 ???
 
@@ -365,6 +457,7 @@ The standard library can't add interop traits for things like reading and writin
 The list goes on.
 
 ---
+name: rust1.75
 
 # When Rust 1.75 is released on Dec 28...
 
@@ -384,6 +477,20 @@ impl Handler {
 }
 ```
 
+---
+
+template: rust1.75
+
+.line6[![Arrow](./images/Arrow.png)]
+
+.line10[![Arrow](./images/Arrow.png)]
+
+---
+
+template: rust1.75
+
+.line2[![Arrow](./images/Arrow.png)]
+
 ???
 
 But all of that is changing! As of Rust 1.75, both async functions and impl trait are accepted within traits!
@@ -392,7 +499,26 @@ And yes, it
 
 ---
 
+# What's this mean?
+
+```rust
+trait Handler {
+    fn handle(r: Request) -> impl Future<Output = Response>;
+}
+
+async fn handle(h: impl Handler, r: Request) {
+    h.handle(r).await
+}
+```
+
+.line5[![Arrow](./images/Arrow.png)]
+
+---
+
 # What's this warning about?
 
 ```rust
+trait Handler {
+    async fn handle(r: Request) -> Response;  // ⚠️
+}
 ```

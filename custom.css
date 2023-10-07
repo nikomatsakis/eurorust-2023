@@ -456,6 +456,13 @@ mark,
   width: 50px;
 }
 
+.line6 img {
+  position: absolute;
+  top: 260px;
+  left: 10px;
+  width: 50px;
+}
+
 .line7 img {
   position: absolute;
   top: 300px;
@@ -466,6 +473,13 @@ mark,
 .line8 img {
   position: absolute;
   top: 310px;
+  left: 10px;
+  width: 50px;
+}
+
+.line10 img {
+  position: absolute;
+  top: 370px;
   left: 10px;
   width: 50px;
 }
@@ -720,4 +734,14 @@ blockquote p {
   top: 575px;
   left: 210px;
   width: 50px;
+}
+
+.batgirlcircle {
+  position: absolute;
+  top: 330px;
+  left: 90px;
+  border-radius: 50%;
+  width: 125px;
+  height: 75px;
+  border: 10px solid red;
 }
