@@ -556,6 +556,8 @@ trait Handler {
 }
 ```
 
+Async functions in traits don't (yet) handle all the use cases we want.
+
 ???
 
 You may recall that, earlier, I said that using an `async fn` in a trait was allowed, but you got a warning.
@@ -564,125 +566,55 @@ Well, it's because there are still key limitations to async functions that we'd 
 
 ---
 
-name: send-bounds
+# Limitation 1
 
-# Send bounds
+### [Send bounds](https://smallcultfollowing.com/babysteps/blog/2023/02/01/async-trait-send-bounds-part-1-intro/)
 
-```rust
-trait Handler {
-    async fn handle(r: Request) -> Response;
-}
+Upshot:
 
-async fn handle_spawn(h: impl Handler, r: Request) {
-    tokio::spawn(async move {
-        h.handle(r).await // 💥 `h` is not `Send`!
-    });
-}
-```
+* You have to hardcode in your trait whether the returned futures are `Send` or not.
+    * If you are using a workstealing executor, use `-> impl Future + Send`
+    * If you are not, use `async fn` or `-> impl Future`
+    * Can't make one trait that fits both use cases perfectly (yet).
 
 ???
 
-The biggest limitation is send bounds.
-Suppose that you wanted to to take that same `handle` function,
-but you wanted to execute it in another task.
+There are the two key limitations.
+
+The first one is called the "send bound" problem.
+I can't cover all the details here, so I've got a link you can read if you want to dive deeper.
+
+The gist of the send bound problem is that, when you define a trait with async function,
+the trait has to declare up front whether the future to be returned is `Send` or not.
+This means you can't write a single trait that works for all kinds of runtimes.
+This means that generic crates like `tower` don't have all the tools they need.
+
+Also, the `async fn` sugar doesn't work well in the most common setup -- using tokio in its default configuration, with a work-stealing executor. For that, you probably want to write `-> impl Future + Send` in your traits.
+
+We have some ideas how to fix this, and we hope to deliver a solution in the short term, hopefully reaching stable very early next year.
 
 ---
-template: send-bounds
 
-.line6[![Arrow](./images/Arrow.png)]
+# Limitation 2
 
+### [Dyn safety](https://smallcultfollowing.com/babysteps/blog/2021/09/30/dyn-async-traits-part-1/)
+
+Upshot:
+
+* No native support for `Box<dyn Handler>`; but you can workaround this with a procedural macro.
 
 ???
 
-You might invoke `tokio::spawn` to do that.
-
----
-
-template: send-bounds
-
-.line7[![Arrow](./images/Arrow.png)]
-
-???
-
-But if you try that, you're going to get an error. The problem is that `h` can be any type that implements `Handler`, but spawn requires types that are sendable and static. OK, you think, I can handle this.
-
----
-
-name: send-bounds-1
-
-# Send bounds
-
-```rust
-trait Handler {
-    async fn handle(r: Request) -> Response;
-}
-
-async fn handle_spawn(h: impl Handler + Send + 'static, r: Request) {
-    tokio::spawn(async move {
-        h.handle(r).await // 💥 future returned is not `Send`!
-    });
-}
-```
-
----
-
-template: send-bounds-1
-
-.line5[![Arrow](./images/Arrow.png)]
-
-???
-
-Just update the bounds on `h` to use `Send + 'static`, right? Now it must be a handler that is also sendable across threads and which contains no references.
-
----
-
-template: send-bounds-1
-
-.line6[![Arrow](./images/Arrow.png)]
-
-???
-
-Wrong. You still get an error! Why is that? Well, the problem is that, when you call the method `handle`, you get back a future -- and *that future* is not sendable. So what you really want to be able to do is to say that you want *the future returned by handle* to be `Send`.
-
----
-
-# One way to fix this
-
-```rust
-trait Handler {
-    fn handle(
-        r: Request
-    ) -> impl Future<Output = Response> + Send;
-}
-```
-
-.line4[![Arrow](./images/Arrow.png)]
-
-??? 
-
-One way to fix this is to update the trait definition.
-This is fine for some use cases, but not for all.
-Sometimes you want a trait that *may* return send futures but *may not*.
-
----
-
-# Future work
-
-```rust
-trait Handler {
-    async fn handle(r: Request) -> Response;
-}
-
-async fn handle_spawn(h: impl Handler + Send + 'static, r: Request) {
-    tokio::spawn(async move {
-        h.handle(r).await // 💥 future returned is not `Send`!
-    });
-}
-```
+We also don't have native support for dyn safety, which means that when you have async functons, you can't just write `dyn Trait` syntax and have it work. This problem is less serious because there's a decent workaround, and we expect to ship a procedural macro that will help you to solve it. Still, it's something we'd like to fix.
 
 ---
 
 # Why stabilize async functions now?
+
+They work great for a lot of people:
+
+* Embedded development, single-threaded executors
+* Application developers may not hit the send bound problem
 
 ???
 
@@ -690,12 +622,36 @@ You may wonder why we didn't just wait until everything was perfect.
 This was, in fact, controversial.
 But remember Rust's goal: stability without stagnation.
 Nothing is ever truly done, so when something is ready and usable, we want to get it into your hands, even if there is still more to come.
-In particular, async functions in their current form are still good enough for a lot of use cases.
-
+Async functions as they are still satisfy a lot of use cases,
+and the changes we plan to make are not going to affect anything that is stabilized,
+so there is no reason to hold back.
 
 ---
 
 # Role of editions
+
+```rust
+async fn process(h: &Data) -> Result
+```
+
+--
+
+In Rust 2021, references must be captured explicitly:
+
+```rust
+fn process<'h>(h: &'h Data) -> impl Future<Output = Result> + 'h
+//        ----     --                                         --
+```
+
+--
+
+Rust 2024 will make this the default:
+
+```rust
+fn process(h: &Data) -> impl Future<Output = Result>
+```
+
+For more details, see [RFC #3498](https://github.com/rust-lang/rfcs/pull/3498).
 
 ---
 
