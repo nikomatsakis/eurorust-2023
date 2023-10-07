@@ -444,7 +444,7 @@ mark,
 
 .line4 img {
   position: absolute;
-  top: 212px;
+  top: 200px;
   left: 10px;
   width: 50px;
 }
@@ -744,4 +744,44 @@ blockquote p {
   width: 125px;
   height: 75px;
   border: 10px solid red;
+}
+
+.implfuture {
+  position: absolute;
+  top: 350px;
+  left: 500px;
+  width: 50px;
+  transform: rotate(135deg);
+}
+
+.asyncbody {
+  position: absolute;
+  top: 440px;
+  left: 55px;
+  width: 50px;
+  transform: rotate(300deg);
+}
+
+.implHandlerArg {
+  position: absolute;
+  top: 210px;
+  left: 350px;
+  width: 50px;
+  transform: rotate(135deg);
+}
+
+.hArg {
+  position: absolute;
+  top: 290px;
+  left: 250px;
+  width: 50px;
+  transform: rotate(230deg);
+}
+
+.retArg {
+  position: absolute;
+  top: 290px;
+  left: 680px;
+  width: 50px;
+  transform: rotate(230deg);
 }

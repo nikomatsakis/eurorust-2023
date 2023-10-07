@@ -262,6 +262,8 @@ And it's why we do editions, which let us fix our mistakes, but don't force you 
 
 ---
 
+name: before-let-else
+
 # Before let-else
 
 ```rust
@@ -275,6 +277,28 @@ fn make_decision() -> bool {
     }
 }
 ```
+
+---
+
+template: before-let-else
+
+.line1[![Arrow](./images/Arrow.png)]
+
+---
+
+template: before-let-else
+
+.line4[![Arrow](./images/Arrow.png)]
+
+---
+
+template: before-let-else
+
+.line7[![Arrow](./images/Arrow.png)]
+
+---
+
+template: before-let-else
 
 .line5[![Arrow](./images/Arrow.png)]
 
@@ -403,6 +427,8 @@ template: after-let-else
 
 ---
 
+name: async-io
+
 # Async I/O in Rust
 
 Ever since Rust 1.39 was released in Nov 2019...
@@ -413,7 +439,9 @@ async fn handle(r: Request) -> Response {
 }
 ```
 
---
+---
+template: async-io
+name: async-io1
 
 This is actually sugar for...
 
@@ -424,6 +452,16 @@ fn handle() -> impl Future<Output = Response> {
     }
 }
 ```
+
+---
+template: async-io1
+
+.implfuture[![Arrow](./images/Arrow.png)]
+
+---
+template: async-io1
+
+.asyncbody[![Arrow](./images/Arrow.png)]
 
 ---
 
@@ -525,6 +563,8 @@ So the impl here could be used with either of the above trait definitions.
 
 ---
 
+name: what-this-mean
+
 # What's this mean?
 
 ```rust
@@ -537,7 +577,23 @@ async fn handle(h: impl Handler, r: Request) {
 }
 ```
 
-.line5[![Arrow](./images/Arrow.png)]
+---
+
+template: what-this-mean
+
+.line2[![Arrow](./images/Arrow.png)]
+
+---
+
+template: what-this-mean
+
+.implHandlerArg[![Arrow](./images/Arrow.png)]
+
+---
+
+template: what-this-mean
+
+.line6[![Arrow](./images/Arrow.png)]
 
 ???
 
@@ -627,6 +683,7 @@ and the changes we plan to make are not going to affect anything that is stabili
 so there is no reason to hold back.
 
 ---
+name: role-of-editions
 
 # Role of editions
 
@@ -634,16 +691,28 @@ so there is no reason to hold back.
 async fn process(h: &Data) -> Result
 ```
 
---
+---
+name: explicit-capture
+template: role-of-editions
 
 In Rust 2021, references must be captured explicitly:
 
 ```rust
 fn process<'h>(h: &'h Data) -> impl Future<Output = Result> + 'h
-//        ----     --                                         --
 ```
 
---
+---
+template: explicit-capture
+
+.hArg[![Arrow](./images/Arrow.png)]
+
+---
+template: explicit-capture
+
+.retArg[![Arrow](./images/Arrow.png)]
+
+---
+template: explicit-capture
 
 Rust 2024 will make this the default:
 
@@ -655,8 +724,5 @@ For more details, see [RFC #3498](https://github.com/rust-lang/rfcs/pull/3498).
 
 ---
 
-# Where to from here?
+# Scaling the ecosystem
 
----
-
-# Where to from here?
