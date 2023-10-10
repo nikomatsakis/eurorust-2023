@@ -17,8 +17,8 @@ count: false
 .column40[![Niko with a snake](./images/withsnake.jpg)]
 .column60[
 * Involved in Rust since 2010
-* Co-lead of Rust language design team
-* Manager of Rust team at Amazon
+* Co-lead of Rust language design, types teams
+* Rust team at Amazon
 ]
 ]
 
@@ -724,5 +724,89 @@ For more details, see [RFC #3498](https://github.com/rust-lang/rfcs/pull/3498).
 
 ---
 
-# Scaling the ecosystem
+# Looking further out
 
+ .giant[🔭] .metelescope[![me](./images/me.png)]
+
+---
+
+# Scaling the community
+
+* Rust libraries are often best-in-class
+    * Tokio
+    * Regex
+    * ...
+--
+* Proc macros and derive are a big part of that
+    * Serde
+    * Diesel
+    * Async-trait
+--
+* Rust libraries are *so limited*
+    * Lints, suggestions
+    * Error messages
+    * IDE, debugger interactions
+
+---
+
+# Fragmentation
+
+.giant[🔩]
+
+---
+
+# Fragmentation
+
+> ### When were screw threads first standardized? 
+>
+> It wasn’t until 1841 that Joseph Whitworth managed to find a solution. **After years of research collecting sample screws from many British workshops**, he suggested standardizing the size of the screw threads in Britain so that, for example, someone could make a bolt in England and someone in Glasgow could make the nut and they would both fit together. 
+
+.footnote[
+    From the Nord Lock group's [History of the Bolt](https://www.nord-lock.com/insights/knowledge/2017/the-history-of-the-bolt/)
+]
+
+---
+
+# Fragmentation
+
+> ### Introducing the ISO metric 
+>
+> **During World War I, the lack of consistency between screw threads in different countries became a huge obstacle to the war effort**; during World War II it became an even bigger problem for the Allied forces. In 1948, Britain, the USA and Canada agreed on the Unified thread as the standard for all countries that used imperial measurements.
+
+.footnote[
+    From the Nord Lock group's [History of the Bolt](https://www.nord-lock.com/insights/knowledge/2017/the-history-of-the-bolt/)
+]
+
+---
+
+# Fragmentation
+
+* Small stdlib = lots of choices
+
+--
+* Ideally: coallesce around some standards to allow interop
+
+--
+* In practice: don't see that happening
+    * allocators
+    * async runtimes
+    * serializer, deserializer
+    * encryption library
+    * ...
+--
+* Obstacles:
+    * coherence, orphan rules
+    * cargo and static linking
+    * "dependency injection" 😱
+
+---
+
+# Thank you!
+
+.center[
+.p20[![Person left](./images/Lovers-Left.png)]
+.p20[![Ferris](./images/ferris.svg)]
+.p20[![Person right](./images/Lovers-Right.png)]
+]
+
+And special thanks to the EuroRust organizers for bringing us all together! 👏 👏🏼 👏🏿

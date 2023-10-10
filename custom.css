@@ -785,3 +785,14 @@ blockquote p {
   width: 50px;
   transform: rotate(230deg);
 }
+
+.giant {
+  font-size: 1000%;
+}
+
+.metelescope img {
+  width: 20%;
+  position: absolute;
+  top: 275px;
+  left: 300px;
+}
