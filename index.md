@@ -788,7 +788,16 @@ For more details, see [RFC #3498](https://github.com/rust-lang/rfcs/pull/3498).
 * Obstacles:
     * coherence, orphan rules
     * cargo and static linking
-    * "dependency injection" 😱
+
+---
+
+# Organization of the project itself
+
+![Papers flying everywhere](./images/paperwork.gif)
+
+???
+
+Another of the biggest challenges that I see is not a technical one, but an organizational one. As you may have gleaned when we talked about let-else, open source development can be fairly chaotic, involving a lot of different people moving at different times. Tracking that is pretty hard, and I think that this takes its toll on everyone involved in the project in different ways. I could've done a whole talk just on this, but -- luckily -- we've got an entire panel dedicated to this topic later today, so I'll hold off until then.
 
 ---
 
