@@ -60,15 +60,6 @@ Not so true anymore. More and more, people tend to respond, "Oh, hey, we're usin
 
 # Rust adoption
 
-.p80[![Rust discussed at the US congress](./images/RustAtCongress.png)]
-
-???
-
-I mean heck, we even have the US congress weighing in on Rust now and, if I recall correctly, probing whether the nightly or stable toolchain is a better choice.
----
-
-# Rust adoption
-
 .p80[![Rust in batgirl](./images/RustInBatGirl.png)]
 
 ???
