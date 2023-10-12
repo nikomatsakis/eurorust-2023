@@ -477,6 +477,13 @@ mark,
   width: 50px;
 }
 
+.line9 img {
+  position: absolute;
+  top: 350px;
+  left: 10px;
+  width: 50px;
+}
+
 .line10 img {
   position: absolute;
   top: 370px;

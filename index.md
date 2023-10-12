@@ -405,9 +405,14 @@ template: after-let-else
 
 .p80[![Rust analyzer](./images/FeatureRustAnalyzer.png)]
 
+
 .footnote[
     Consider the rust-analyzer [Open Collective](https://opencollective.com/rust-analyzer).
 ]
+
+--
+
+.p80[![RustRover](./images/rustrover.svg)]
 
 ---
 
@@ -632,7 +637,7 @@ trait Handler {
 
 --
 
-.line3[![Arrow](./images/Arrow.png)]
+.line2[![Arrow](./images/Arrow.png)]
 
 Async functions in traits don't (yet) handle all the use cases we want.
 
