@@ -510,92 +510,64 @@ The standard library can't add interop traits for things like reading and writin
 The list goes on.
 
 ---
-name: rust1.75
-
 # When Rust 1.75 is released on Dec 28...
 
 ```rust
 trait Handler {
-    async fn handle(r: Request) -> Response;  // ⚠️
-}
-
-trait Handler {
     fn handle(r: Request) -> impl Future<Output = Response>; // ✅
-}
-
-impl Handler {
-    async fn handle(r: Request) -> Response { // ✅
-        ... do_stuff().await ...
-    }
 }
 ```
 
----
-
-template: rust1.75
-
-.line6[![Arrow](./images/Arrow.png)]
-
-.line10[![Arrow](./images/Arrow.png)]
-
----
-
-template: rust1.75
+--
 
 .line2[![Arrow](./images/Arrow.png)]
 
-???
-
-But all of that is changing! As of Rust 1.75, both async functions and impl trait are accepted within traits!
-
-And of course it also works in impls.
-In fact, because `async fn` is just sugar for returning `impl Future`, you can mix and match.
-So the impl here could be used with either of the above trait definitions.
-
 ---
-
-name: what-this-mean
-
-# What's this mean?
+# When Rust 1.75 is released on Dec 28...
 
 ```rust
 trait Handler {
     fn handle(r: Request) -> impl Future<Output = Response>;
 }
 
-async fn handle(h: impl Handler, r: Request) {
+impl Handler {
+    fn handle(r: Request) -> impl Future<Output = Response> {
+        ... do_stuff().await ...
+    }
+}
+```
+
+--
+
+.line6[![Arrow](./images/Arrow.png)]
+
+---
+name: calling
+# When Rust 1.75 is released on Dec 28...
+
+```rust
+trait Handler {
+    fn handle(r: Request) -> impl Future<Output = Response>;
+}
+
+async fn handle<H>(h: H, r: Request) 
+where
+    H: Handler,
+{
     h.handle(r).await
 }
 ```
 
 ---
-
-template: what-this-mean
-
-.line2[![Arrow](./images/Arrow.png)]
+template:calling
+.line7[![Arrow](./images/Arrow.png)]
 
 ---
-
-template: what-this-mean
-
-.implHandlerArg[![Arrow](./images/Arrow.png)]
+template:calling
+.line9[![Arrow](./images/Arrow.png)]
 
 ---
-
-template: what-this-mean
-
-.line6[![Arrow](./images/Arrow.png)]
-
-???
-
-In short, things mostly work like you expect.
-You can write traits that return futures.
-You can write generic code that uses those traits and call methods.
-You can also write traits that return other things, like iterators, closures, etc.
-
----
-
-# What's this warning about?
+# What about `async fn` in traits?
 
 ```rust
 trait Handler {
@@ -603,13 +575,18 @@ trait Handler {
 }
 ```
 
+--
+
+.line3[![Arrow](./images/Arrow.png)]
+
 Async functions in traits don't (yet) handle all the use cases we want.
 
 ???
 
-You may recall that, earlier, I said that using an `async fn` in a trait was allowed, but you got a warning.
-Why is that?
-Well, it's because there are still key limitations to async functions that we'd like to resolve we say that they are ready for widespread use.
+I'm sure you're wondering -- ok, so why is the trait desugared?
+Can I use async functions in traits?
+The answer is YES, you can, but you are going to get a warning. 
+That's because while basic support for async functions in traits is done, there are still some upcoming features that we want to see finished before we say that async fn in traits are ready for widespread use.
 
 ---
 
