@@ -522,7 +522,19 @@ trait Handler {
 
 .line2[![Arrow](./images/Arrow.png)]
 
+???
+
+But here's the good news. On Dec 28, when Rust 1.75 comes out,
+barring any unforeseen surprises, you are going to be able to write
+`-> impl Future` in traits. In fact, you can write any sort of `impl Trait` return type.
+So you can have traits that return futures, or traits that return iterators, or closures,
+or whatever. Big shout out to Tyler Mandry for driving this work, 
+to Michael Goulet for doing the implementation, and to TC for helping with the organizational "ops"
+that are needed to push something like this over the finish line. 
+Michael -- perhaps better known as compiler-errors -- is here in the audience, even.
+
 ---
+name: implfutureinimpl
 # When Rust 1.75 is released on Dec 28...
 
 ```rust
@@ -532,17 +544,56 @@ trait Handler {
 
 impl Handler {
     fn handle(r: Request) -> impl Future<Output = Response> {
+        async move {
+            ... do_stuff().await ...
+        }
+    }
+}
+```
+
+---
+template: implfutureinimpl
+
+.line6[![Arrow](./images/Arrow.png)]
+
+???
+
+Of course, you can also use impl trait when you implement
+the trait.
+
+---
+template: implfutureinimpl
+
+.line7[![Arrow](./images/Arrow.png)]
+
+Here we see a "desugared" async function, so the body has an `async move` block.
+
+---
+# When Rust 1.75 is released on Dec 28...
+
+```rust
+trait Handler {
+    fn handle(r: Request) -> impl Future<Output = Response>;
+}
+
+impl Handler {
+    async fn handle(r: Request) -> Response {
         ... do_stuff().await ...
     }
 }
 ```
 
---
-
 .line6[![Arrow](./images/Arrow.png)]
+
+???
+
+In fact, since async fn is literally just sugar for `-> impl Future`,
+you can also write `async fn` in the impl. It works exactly the same,
+except that you don't need to have an async block in the body.
 
 ---
 name: calling
+
 # When Rust 1.75 is released on Dec 28...
 
 ```rust
@@ -562,9 +613,14 @@ where
 template:calling
 .line7[![Arrow](./images/Arrow.png)]
 
+???
+
+And once you write a trait that uses `impl Future`, 
 ---
 template:calling
 .line9[![Arrow](./images/Arrow.png)]
+
+???
 
 ---
 # What about `async fn` in traits?
