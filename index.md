@@ -412,7 +412,7 @@ template: after-let-else
 
 --
 
-.p80[![RustRover](./images/rustrover.svg)]
+.p20[![RustRover](./images/rustrover.svg)]
 
 ---
 
