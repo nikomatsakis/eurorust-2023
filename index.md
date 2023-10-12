@@ -615,12 +615,18 @@ template:calling
 
 ???
 
-And once you write a trait that uses `impl Future`, 
+And once you write a trait that uses impl trait, you can write functions that call it, just like any other trait.
+
 ---
 template:calling
 .line9[![Arrow](./images/Arrow.png)]
 
 ???
+
+In this case, since the function is returning a future, you can call it from an async function
+and then await the result. It all works like you expect. 
+
+Now, if you are an experienced async Rust developer, you may be thinking "but I can already use the `#[async_trait]` macro, what's new here?" The answer is that the macro was introducing boxing and dynamic dispatch. This is probably fine for most people, but it can have some performance cost, especially in tight loops, and it's just not the way Rust normally works. The native implementation works like any other trait, so you get static dispatch, no allocation, etc, just as you are used to.
 
 ---
 # What about `async fn` in traits?
