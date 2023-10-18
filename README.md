@@ -1,3 +1,5 @@
-# Talk template
+# Rust: when the details matter
 
-Clone this repo for new talks
+My EuroRust 2023 talk slides
+
+View rendered at [https://nikomatsakis.github.io/eurorust-2023/](https://nikomatsakis.github.io/eurorust-2023/)
