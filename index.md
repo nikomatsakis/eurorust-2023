@@ -435,7 +435,7 @@ name: async-io1
 This is actually sugar for...
 
 ```rust
-fn handle() -> impl Future<Output = Response> {
+fn handle(r: Request) -> impl Future<Output = Response> {
     async move {
         ... do_stuff().await ...
     }
